@@ -1,0 +1,243 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Real User Monitoring - Session 1</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="RUM-Session1"
+                  title="Real User Monitoring - Session 1"
+                  environment="web"
+                  feedback-link="mailto:d1-apac@dynatrace.com">
+    
+      <google-codelab-step label="Prerequisites" duration="0">
+        <p>In this excerise, we will deploy the sample-bank web application</p>
+<h2 is-upgraded>Deploy the Application using Docker-Compose</h2>
+<ul>
+<li>Navigate to the <code>docker-compose-sample-bankApp</code> folder<br><img alt="step-1" src="img/ac8ac16160aff18c.png"></li>
+<li>Run the following code to deploy your application: <code>sudo docker-compose up</code><br><img alt="step-2" src="img/920fbccb36e4ea34.png"></li>
+</ul>
+<h2 is-upgraded>Accessing the Application UI</h2>
+<p>To do so navigate to Host View, dropdown the <strong>Properties and Tags</strong> and you will get a list of various metadata associated with the host created. Locate the <strong>Public IP Address</strong> and copy its value.</p>
+<p class="image-container"><img alt="Host IP" src="img/a23d2054fc0f23df.png"></p>
+<p>Open up your <strong>web browser</strong> and access the sample application with <code><IP ADDRESS>:3000</code></p>
+<p class="image-container"><img alt="Application URL" src="img/a8701e7128f24f56.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="OneAgent Installation" duration="0">
+        <p>In this exercise, we will deploy the OneAgent to a Linux instance and let the OneAgent discover what is running in that instance.</p>
+<h2 is-upgraded>Download OneAgent</h2>
+<aside class="warning"><p>Use PuTTy (Windows), PowerShell (Windows) or Terminal (Mac), ssh into the instance (IP address using the your PEM Key)</p>
+</aside>
+<ol type="1">
+<li>Open your browser and access the Dynatrace URL.</li>
+<li>Select <strong>Deploy Dynatrace</strong> from the navigation menu.<br><img alt="Deploy Dynatrace" src="img/cc96d133d760045e.png"></li>
+<li>It opens up <strong>Dynatrace Hub</strong> and from there, we will need to select &#34;Back to Deploy Dynatrace&#34;.<br><img alt="Dynatrace Hub" src="img/4a277a9fab6354.png"></li>
+<li>Click the <strong>Start installation</strong> button and select <strong>Linux</strong>.<br><img alt="Install" src="img/f92d21e0d6c4834c.png"><br><img alt="Linux Install" src="img/fbf51fc3c50883.png"></li>
+<li>Choose the installer type from the drop-down list (we&#39;ll use the default x86/64). Use the Linux shell script installer on any Linux system that&#39;s supported by Dynatrace, regardless of the packaging system your distribution depends on.</li>
+<li><strong>Copy</strong> the command provided in the &#34;Use this command on the target host&#34; text field. <strong>Paste</strong> the command into your terminal window and execute it.<br><img alt="Install1" src="img/fdb2e49277243a00.png"></li>
+</ol>
+<aside class="special"><p>Example:<br><img alt="example" src="img/43082745dded3229.png"></p>
+</aside>
+<h2 is-upgraded>Execute the installation script</h2>
+<p>(Optional) Once the download is complete, you can verify the signature by copying the command from the <em>&#34;Verify signature&#34;</em> text field, then pasting the command into your terminal window and executing it. Make sure your system is up to date, especially SSL and related certificate libraries.</p>
+<p><strong>Copy</strong> the command that&#39;s provided in the text box &#34;And run the installer with root rights&#34; text field.</p>
+<p class="image-container"><img alt="Install2" src="img/e3d9e8225578769e.png"></p>
+<p>Paste the command into your terminal window and execute it. You will need to make the script executable before you can run it.</p>
+<p>Note that you will need root access. You can use sudo to run the installation script. To do this, type the following command into the directory where you downloaded the installation script.</p>
+<aside class="special"><p>Example:<br><img alt="example2" src="img/b0cfb970938f083.png"></p>
+</aside>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="OneAgnet Application injection" duration="0">
+        <p>In this exercise, we will check the OneAgent injection into the application and verify the injection of the JavaScript in the application UI.</p>
+<h2 is-upgraded>How to check application is monitored by OneAgent?</h2>
+<p>To confirm that the application&#39;s web front-end process is monitored, go to the application UI and check if the RUM JavaScript tag has been correctly injected into the application&#39;s HTML</p>
+<p>Navigate to the application UI and open the browser&#39;s DevTools to check the <strong>Sources</strong> and cleck the <code><HEAD></code> element to locating the JavaScript. Search the script that contains the string <code>ruxitagentjs</code> in its file name.</p>
+<p class="image-container"><img alt="Missing-JS-Tag" src="img/923ffc94c3b0a379.png"></p>
+<h2 is-upgraded>Exploring Dynatrace</h2>
+<p>Login to the Dynatrace environment and explore around <strong>Smartscape, Host View.</strong></p>
+<p>To make sure that the application requests are captured by Dynatrace, go to <strong>Host &gt; ec2-instance &gt; bin/www (node-bank2)</strong> which is the Application Process.</p>
+<p>You will discover that Dynatrace automatically monitors the host metrics, processes but not the <strong>services</strong></p>
+<p class="image-container"><img alt="Process-Unmonitored" src="img/fb254cf871105c40.png"></p>
+<h2 is-upgraded>Restarting Sample-Bank container</h2>
+<p>For Dynatrace to get Services (code-level visibility), the Application services need to be restarted. Since the application is containerized, the easiest way to do that is to restart the docker containers.</p>
+<p>To list all the docker containers, run <code>$docker ps -a</code></p>
+<p>Run the following command to restart <code>$docker restart sample-bank</code> to restart the Sample Banking Application</p>
+<p>To check and verify that Sample Bank Application container has been restarted, run <code>$docker ps -a</code> again</p>
+<p class="image-container"><img alt="Docker-Restart" src="img/3ba3b041b9f2fd3c.png"></p>
+<h2 is-upgraded>Confirming OneAgent injection</h2>
+<p>If the applications or Real User Monitoring data is not seen in Dynatrace, the first thing which is needed to do is confirm that there is traffic in the web front-end processes (web server, Java, Node.js, etc). To do this, interact with the applications&#39; pages to generate some traffic.</p>
+<p>Access the banking App with the either of the below credentials</p>
+<p>Username: guestuser1@mybank.com Password: GuestUser12@</p>
+<p>OR</p>
+<p>Username: guestuser2@mybank.com Password: GuestUser12@</p>
+<p>Once contain that the web front-end processes have traffic on them, check the following to determine the RUM JavaScript Tag injection from Dynatrace</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Troubleshooting" duration="0">
+        <p>In this excerise, we will verify if the OneAgent is monitoring the application.</p>
+<h2 is-upgraded>Confirming that the RUM JavaScript tag has been correctly injected into the application&#39;s HTML</h2>
+<p>Check for the Dynatrace JavaScript if the application contains the string <code>ruxitagentjs</code> in the <strong>Source</strong> files under the <code><HEAD></code> element</p>
+<p><code>bash<br><!-- Example - Auto injection of JavaScript tag --><br><script type="text/javascript" src="/ruxitagentjs_[...]_[...].js" data-dtconfig="[...]"></script></code><br><br><img alt="Application-JavaScript-Tag" src="img/b83140db477453be.png"></p>
+<h2 is-upgraded>Confirming that the RUM JavaScript tag has downloaded correctly</h2>
+<p>With the help of browser DevTool, load the application&#39;s page and navigate to <strong>Network</strong> section. Confirm if the response of the JavaScript code exists with a response status <code>200 "OK"</code></p>
+<p class="image-container"><img alt="Application-JavaScript-Tag" src="img/e385a2b146d3ad7c.png"></p>
+<h2 is-upgraded>Confirming that RUM monitoring data is been sent to Dynatrace</h2>
+<p>The JavaScript Tag reports back data via XHR or CORS post requests. The requests can be viewed among the <strong>Network</strong> operations using the browser DevTools. The URL related to the request will begin with <code>rb_</code> and must have status <code>200 "OK"</code> response and must start with <code>**OK**</code></p>
+<p class="image-container"><img alt="Application-JavaScript-Tag" src="img/55016e3b79c64cd3.png"></p>
+<h2 is-upgraded>Verify real user identifer is equal to cookie value</h2>
+<p>Create a new user session and then navigate to your tenant and find the real user identifier.</p>
+<p class="image-container"><img alt="cookie value 1" src="img/b7fb44fb00b5aa66.png"></p>
+<p>Navigate back to to the sample bank application and in chrome dev tools to find the cookie value and verify it matches with the real user identifier.</p>
+<p class="image-container"><img alt="cookie value 2" src="img/23c82dc93d02dccd.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Defining the Application" duration="0">
+        <p>In this excerise, we will define the Application detection rule to route the traffic.</p>
+<p>As a starting point, all monitoring data is encapsulated in a placeholder application called <code>My Web Application</code>. The reason being that this placeholder applicaiton is to allow for more flexibility, as it would be easier on how the applications should be organized.</p>
+<h2 is-upgraded>Application detection rule</h2>
+<p>Application detection rule would falicated to create more applications, change existing application mapping, or if needed define more complex rules looking at URL&#39;s and not only on domains.</p>
+<p>From the navigation menu, select <strong>Settings &gt; Web and mobile monitoring &gt; Applications detection</strong>. Under the <strong>Define application detection rule</strong> section, the list of defined rules are available in the sequential order and the top of list takes the priority over the following rules.</p>
+<p>Select <strong>Add detection rule</strong> and select the rule applies to <code>New application</code> and provide a custom name for the application under the name text field.</p>
+<p>Define which web requests are part of this application by selecting the condition as <code>If the URL</code> and scope to be <code>contains</code> with the <code><IP ADDRESS>:3000</code></p>
+<p class="image-container"><img alt="Application-Definition" src="img/45f65f709d34e9e1.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="RUM User Session Details" duration="0">
+        <p>In this excerise, we will be highlighting &#34;User Sessions&#34; and different user actions captured in the user-session. We will also be looking into the waterfall model to view application load times.</p>
+<ol type="1">
+<li>Navigate to User sessions from the burger menu on the left. There will be no user sessions<br><img alt="US1" src="img/775c68376d3a170a.png"></li>
+<li>Create a user session by navigating through the sample-bank application in an incognito window and then close the broweser window when complete.<br><img alt="GIF" src="img/f3c93eb3915cc582.gif"></li>
+<li>Navigate back to the Dynatrace tenant and view the the user action<br><img alt="US3" src="img/da3da5c6b0922a34.png"></li>
+<li>Navigate to session details for further drill-down<br><img alt="US4" src="img/bafd8bb0ef2ccdfd.png"></li>
+</ol>
+<h2 is-upgraded>Waterfall Analysis</h2>
+<p>Dynatrace captures user experience and performance data by monitoring individual user actions. Typically a user action begins with a click on an HTML control (for example, a button or link). The browser then loads the requested data, either by navigating to a new page or via an XHR/fetch call. JavaScript callbacks are then executed, the DOM tree is built or changed, and the web application is then once again ready for a new user action.</p>
+<p>Select a user action and perform a waterfall analysis</p>
+<p class="image-container"><img alt="US5" src="img/6f659c24d084fd26.png"></p>
+<h2 is-upgraded>Key User Actions</h2>
+<p>With the key user action feature, you can customize the Apdex thresholds for each of these user actions. You can use this feature to monitor key actions with a dedicated dashboard tile and track historic trends.</p>
+<ol type="1">
+<li>Navigate to the applications page and the select the application</li>
+<li>Click view full details under the Top 3 user actions</li>
+<li>Under Top 100 user actions, select a user action.</li>
+<li>On the top-right corner of the User action details page, select Mark as key user action. The selected user action will now be displayed under Key user actions on the User action analysis page.</li>
+</ol>
+<p class="image-container"><img alt="KeyUserAction" src="img/3d70d4043ef8ba5b.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="User Session-Property &amp; User Tag" duration="0">
+        <p>In this exercise, we will need to define the Request attribute to track specific request.</p>
+<h2 is-upgraded>Define Request Attribute</h2>
+<ol type="1">
+<li>Select &#34;Settings&#34; from the navigation menu</li>
+<li>Click on &#34;Server-side service monitoring&#34;</li>
+<li>select &#34;Request attributes&#34;</li>
+<li>Click on Select &#34;Define a new request attribute&#34;</li>
+<li>Provide &#34;Request attribute name&#34; as <strong>Amount</strong>, will leave rest of the settings as default.</li>
+<li>Click on &#34;Add new data source&#34;<br><img alt="RA3" src="img/58d7654e27a97c26.png"></li>
+<li>Click on &#34;Request attribute source&#34; dropdown, select <strong>HTTP POST parameter</strong> and provide a &#34;Parameter name&#34; as <strong>amount</strong>, and click on &#34;Save&#34;.</li>
+<li>After defining the Request attribute, click on &#34;Save&#34;.<br><img alt="RA4" src="img/4d472c5b932d9721.png"></li>
+</ol>
+<h2 is-upgraded>Define session property</h2>
+<ol type="1">
+<li>Select &#34;Application&#34; fro the navigation menu and select &#34;BankApp&#34; application</li>
+<li>Click on &#34;...&#34; and select &#34;Edit&#34;</li>
+<li>Click on &#34;Capturing&#34; and select &#34;Session and action properties&#34;</li>
+<li>Select &#34;Add property&#34;</li>
+<li>Select <strong>Server side request attribute</strong> from &#34;Expression type&#34;, select <strong>Amount</strong> from Request attribute name, provide &#34;Display name&#34; as <strong>Amount entered</strong>, and enable &#34;Store as session property&#34; and click on &#34;Save property&#34;<br><img alt="Sespro3" src="img/357352b6b45378ec.png"></li>
+</ol>
+<p>After setting it up, we can generate user sessions and to review it, we will need to navigate to &#34;User Sessions&#34; and select the generated session, under the session we can see our defined user session property as highlighted,<br><img alt="Sespro4" src="img/e38ca06ca4f3ab93.png"></p>
+<h2 is-upgraded>Define user tag</h2>
+<ol type="1">
+<li>Navigate to Sample BankApp&#39;s settings page</li>
+<li>Select &#34;Capturing&#34; and click on &#34;User tag&#34;</li>
+<li>Select &#34;Add tag(identifier) rule&#34;</li>
+<li>Select &#34;CSS selector&#34; and define it as  <strong>body&gt;div:nth-child(1) &gt; p</strong>, enable &#34;Apply cleanup rule&#34; and define the regex as <strong>\welcome(.*+)</strong> and Click on &#34;Save changes&#34;<br><img alt="usertag6" src="img/7d953e7513117d16.png"></li>
+<li>Select &#34;User Sessions&#34; from navigation and we can see our generated session with the user tag, we can click on the user session and can see the user tag<br><img alt="usertag8" src="img/568002610e14674c.png"></li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Conversion Goal" duration="0">
+        <p>In this excerise, we will define Conversion goal and monitor the user session which has met the goal defined.</p>
+<h2 is-upgraded>Creating Conversion Goal</h2>
+<p>To define a conversion goal, navigate to the application settings by clicking on <strong>Browse [...] &gt; Edit</strong>. Select <strong>Session Replay and behaviour &gt; Conversion goals</strong> and click <strong>Add goal</strong> to set up the goal.</p>
+<ol type="1">
+<li>Start with defining the <strong>Name</strong> of the goal</li>
+<li>Select respective <strong>Type of goal</strong> as <code>User Action</code></li>
+<li>followed by <strong>Rule applies to:</strong> to be <code>Load actions</code></li>
+<li>Define the <strong>Rule:</strong> to be <code>Action name > contains > /member/withdraw</code></li>
+<li>Click on the <strong>Save</strong> to save the defined conversion goal.<br><img alt="Conversion-Goal" src="img/d4608e0bae35995f.png"></li>
+</ol>
+<h2 is-upgraded>Measuring Conversion Goal</h2>
+<ol type="1">
+<li>Navigating to the <strong>User session</strong>.</li>
+<li>Use the filter option to sort the user session which met the conversion goal defined by selecting <strong>Conversion Goal</strong></li>
+<li>Selecting the <strong>Goal</strong>.</li>
+<li>Selecting the sepecific user session and navigating to the user actions, the defined user action will be easy to identy goal by searching the [🏁] symbol.<br><img alt="Conversion-Goal" src="img/ea4d1bc56c54d61a.png"></li>
+</ol>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Session Replay" duration="0">
+        <p>In this excerise, we will configure Session replay and check the session replay which captured the user session.</p>
+<h2 is-upgraded>Enable session replay</h2>
+<ol type="1">
+<li>To enable Session Replay navigate to the <strong>Applications</strong> menu</li>
+<li>Select the application which needs to be configured.</li>
+<li>Select the <strong>Browse [...]</strong> button <strong>&gt; Edit</strong>.</li>
+<li>From the application settings menu, select <strong>Session Replay and behaviour &gt; Session Replay</strong> and turn on <strong>Enable Session Replay</strong> togel.</li>
+</ol>
+<p class="image-container"><img alt="Session-Replay" src="img/9ca343de3dc1ab12.png"></p>
+<h2 is-upgraded>Masking Session Replay</h2>
+<p>Session Replay implements masking functionality that ensures that private user information is either not captured at the time of recording and/or masked at the time of session playback.</p>
+<p>This option allows a more customized aproach to configure masking. The changes in the configuartion can be made to suite the session-recording requirements which does not require any changes in the application code. The functionality is used to hide interactions with specific elements that might inadvertently reveal confidential end-user information.</p>
+<p class="image-container"><img alt="Session-Replay" src="img/f9062507a5d4121d.png"></p>
+<h2 is-upgraded>Sample Session Replay</h2>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
