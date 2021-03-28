@@ -194,7 +194,7 @@ In this excerise, we will be highlighting "User Sessions" and different user act
 ![US1](./assets/rum/Dynatrace/US2.png)
 
 1. Create a user session by navigating through the sample-bank application in an incognito window and then close the broweser window when complete.  
-![GIF](./assets/rum/Application/gif.GIF)
+![GIF](./assets/rum/Application/GIF.gif)
 
 1. Navigate back to the Dynatrace tenant and view the the user action  
 ![US3](./assets/rum/Dynatrace/US3.png)
@@ -309,4 +309,4 @@ This option allows a more customized aproach to configure masking. The changes i
 
 ### Sample Session Replay
 
-![SessionReplay-Example](./assets/rum/Dynatrace/SessionReplay.mp4)
+<!-- ![SessionReplay-Example](./assets/rum/Dynatrace/SessionReplay.mp4) -->
