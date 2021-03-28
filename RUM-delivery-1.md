@@ -50,7 +50,7 @@ Negative
 ![Dynatrace Hub](./assets/rum/Dynatrace/hub.png)
 
 1. Click the **Start installation** button and select **Linux**.  
-![Install](./assets/rum/Dynatrace/start_install.png)  
+![Install](./assets/rum/Dynatrace/Start_install.png)  
 ![Linux Install](./assets/rum/Dynatrace/Linux_install.png)
 
 1. Choose the installer type from the drop-down list (we'll use the default x86/64). Use the Linux shell script installer on any Linux system that's supported by Dynatrace, regardless of the packaging system your distribution depends on.
