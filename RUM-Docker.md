@@ -1,5 +1,5 @@
 summary: Introduction to RUM
-id: RUM-Session1
+id: RUM-Docker
 categories: scrum-intro
 environments: steplabs
 status: Published
@@ -11,11 +11,11 @@ analytics account:
 <!-- ------------------------ -->
 ## Prerequisites
 
-In this excerise, we will deploy the sample-bank web application
+In this excerise, we will deploy the sample web application
 
 ### Deploy the Application using Docker-Compose
 
-* Navigate to the `docker-compose-sample-bankApp` folder  
+* Navigate to the `docker-compose-sample-SampleApp` folder  
 ![step-1](./assets/rum/CommandLine/pre-step-1.png)
 
 * Run the following code to deploy your application: `sudo docker-compose up`  
@@ -79,7 +79,7 @@ Positive
 ![example2](./assets/rum/CommandLine/example1.png)
 
 <!-- ------------------------ -->
-## OneAgnet Application injection
+## OneAgent Application Injection
 
 In this exercise, we will check the OneAgent injection into the application and verify the injection of the JavaScript in the application UI.
 
@@ -107,27 +107,24 @@ For Dynatrace to get Services (code-level visibility), the Application services 
 
 To list all the docker containers, run `$docker ps -a`
 
-Run the following command to restart `$docker restart sample-bank` to restart the Sample Banking Application
+Run the following command to restart `$docker restart sample-bank` to restart the Sample Application
 
-To check and verify that Sample Bank Application container has been restarted, run `$docker ps -a` again
+To check and verify that Sample Application container has been restarted, run `$docker ps -a` again
 
 ![Docker-Restart](./assets/rum/CommandLine/Docker-Restart.png)
 
-### Confirming OneAgent injection
+### Accessing the application
+Now, register an user on the application at http://<IP-address>:30005/register page with the following details:  
+**Name**: Guest User  
+**E-Mail Address**: guestuser@mybank.com  
+**Password**: GuestUser12@  
+**Name**: 123456789  
 
-If the applications or Real User Monitoring data is not seen in Dynatrace, the first thing which is needed to do is confirm that there is traffic in the web front-end processes (web server, Java, Node.js, etc). To do this, interact with the applications' pages to generate some traffic.
+![Register](./assets/Application/register-user-app.png)
 
-Access the banking App with the either of the below credentials
-
-Username: guestuser1@mybank.com 
-Password: GuestUser12@
-
-OR
-
-Username: guestuser2@mybank.com 
-Password: GuestUser12@
-
-Once contain that the web front-end processes have traffic on them, check the following to determine the RUM JavaScript Tag injection from Dynatrace
+As you have completed registering yourself on the application, now login into the app from http://<my-IP>:30005/login with the credentials as below:  
+**E-Mail Address**: guestuser@mybank.com  
+**Password**: GuestUser12@
 
 <!-- ------------------------ -->
 ## Troubleshooting
@@ -136,11 +133,10 @@ In this excerise, we will verify if the OneAgent is monitoring the application.
 
 ### Confirming that the RUM JavaScript tag has been correctly injected into the application's HTML
 
-Check for the Dynatrace JavaScript if the application contains the string `ruxitagentjs` in the **Source** files under the `<HEAD>` element
+Check for the Dynatrace JavaScript if the application contains the string `ruxitagentjs` in the **Source** files under the `HEAD` element
 
 ```bash
-<!-- Example - Auto injection of JavaScript tag -->
-<script type="text/javascript" src="/ruxitagentjs_[...]_[...].js" data-dtconfig="[...]"></script>
+*script* type="text/javascript" src="/ruxitagentjs_[...]_[...].js" data-dtconfig="[...]" */script*
 ```  
 ![Application-JavaScript-Tag](./assets/rum/Application/JSTag-Source.png)
 
@@ -162,7 +158,7 @@ Create a new user session and then navigate to your tenant and find the real use
 
 ![cookie value 1](./assets/rum/Dynatrace/cookie_value_1.png)
 
-Navigate back to to the sample bank application and in chrome dev tools to find the cookie value and verify it matches with the real user identifier. 
+Navigate back to to the sample application and in chrome dev tools to find the cookie value and verify it matches with the real user identifier. 
 
 ![cookie value 2](./assets/rum/Application/cookie_value_2.png) 
 
@@ -193,7 +189,7 @@ In this excerise, we will be highlighting "User Sessions" and different user act
 1. Navigate to User sessions from the burger menu on the left. There will be no user sessions  
 ![US1](./assets/rum/Dynatrace/US2.png)
 
-1. Create a user session by navigating through the sample-bank application in an incognito window and then close the broweser window when complete.  
+1. Create a user session by navigating through the sample application in an incognito window and then close the broweser window when complete.  
 ![GIF](./assets/rum/Application/GIF.gif)
 
 1. Navigate back to the Dynatrace tenant and view the the user action  
@@ -241,7 +237,7 @@ In this exercise, we will need to define the Request attribute to track specific
 ![RA4](./assets/rum/Dynatrace/RA4.png)
 
 ### Define session property
-1. Select "Application" fro the navigation menu and select "BankApp" application
+1. Select "Application" fro the navigation menu and select "SampleApp" application
 1. Click on "..." and select "Edit"
 1. Click on "Capturing" and select "Session and action properties"
 1. Select "Add property"
@@ -252,7 +248,7 @@ After setting it up, we can generate user sessions and to review it, we will nee
 ![Sespro4](./assets/rum/Dynatrace/Sespro4.png)
 
 ### Define user tag
-1. Navigate to Sample BankApp's settings page
+1. Navigate to Sample SampleApp's settings page
 1. Select "Capturing" and click on "User tag"
 1. Select "Add tag(identifier) rule"
 1. Select "CSS selector" and define it as  **body>div:nth-child(1) > p**, enable "Apply cleanup rule" and define the regex as **\welcome(.*+)** and Click on "Save changes"  
